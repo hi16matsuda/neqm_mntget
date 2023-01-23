@@ -1,1 +1,4 @@
 discord.py
+Pillow
+natsort
+urllib3
