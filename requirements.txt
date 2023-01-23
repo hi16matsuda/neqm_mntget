@@ -2,4 +2,3 @@ discord.py
 Pillow
 natsort
 urllib3
-subprocess

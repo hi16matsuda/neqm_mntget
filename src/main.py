@@ -6,7 +6,6 @@ import discord
 from urllib import request
 from PIL import Image
 from natsort import natsorted
-from subprocess import CREATE_NO_WINDOW
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -28,7 +27,6 @@ mobile_emulation = { "deviceName": "Pixel 5" }
 options.add_experimental_option("mobileEmulation", mobile_emulation)
 driver_path = '.\\chromedriver.exe'
 chrome_service = fs.Service(executable_path=driver_path) 
-chrome_service.creationflags = CREATE_NO_WINDOW
 driver = webdriver.Chrome(service=chrome_service, options=options)
 driver.implicitly_wait(60)
 driver.maximize_window()
