@@ -15,7 +15,7 @@ async def on_ready():
 
 	for channel in client.get_all_channels():
 		if channel.name == ch_name:
-			await channel.send("起動しました")
+			await channel.send("AM8時前後になってたらうれしいなぁ")
 
 # メッセージ受信時に動作する処理
 @client.event
