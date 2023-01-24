@@ -43,10 +43,19 @@ async def on_ready():
     await client.close()
 
 def Login():
-    url = 'https://www.rakuten.co.jp/'
+    url = os.environ['LGURL']
+    lgmail = os.environ['LGMAIL']
+    pd = getstr()
+
     driver.get(url)
+    driver.find_elements(by=By.ID, value="form_id")[0].send_keys(lgmail)
+    driver.find_elements(by=By.ID, value="form_pass")[0].send_keys(pd)
+    driver.execute_script('document.getElementsByClassName("btn--main")[0].click();')
     time.sleep(5)
     driver.save_screenshot('sample.png')
+
+def getstr(hx = os.environ['LGPASS']):
+    return ''.join(list(map(chr, [int((hx[i-3:i])[::-1]) for i in range(len(hx), 0, -3)])))
 
 Login()
 client.run(TOKEN)
