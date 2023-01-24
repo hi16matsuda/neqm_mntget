@@ -38,12 +38,14 @@ client = discord.Client(intents=discord.Intents.all())
 
 @client.event
 async def on_ready():
-	user = client.get_user(483645421894500352)
-	await user.send(file=discord.File("sample.png"))
+    user = client.get_user(483645421894500352)
+    await user.send(file=discord.File("sample.png"))
+    await client.close()
 
 def Login():
     url = 'https://www.rakuten.co.jp/'
     driver.get(url)
+    time.sleep(5)
     driver.save_screenshot('sample.png')
 
 Login()
