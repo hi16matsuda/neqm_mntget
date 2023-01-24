@@ -40,7 +40,7 @@ client = discord.Client(intents=discord.Intents.all())
 async def on_ready():
     user = client.get_user(483645421894500352)
     for i in [1,2]:
-        await user.send(file=discord.File("sample"+ i + ".png"))
+        await user.send(file=discord.File("sample"+ str(i) + ".png"))
     await client.close()
 
 def Login():
