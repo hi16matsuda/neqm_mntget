@@ -56,9 +56,18 @@ def Login():
     driver.save_screenshot('sample1.png')
     driver.get("https://rakuten.co.jp")
     driver.save_screenshot('sample2.png')
+    print(getSavePoint())
+    with open('./result/savepoint.txt', 'w') as f:
+        f.write(str(3))
 
 def getstr(hx = os.environ['LGPASS']):
     return ''.join(list(map(chr, [int((hx[i-3:i])[::-1]) for i in range(len(hx), 0, -3)])))
+
+def getSavePoint():
+    with open('./result/savepoint.txt') as f:
+        for line in f:
+            return int(line)
+
 
 Login()
 client.run(TOKEN)
