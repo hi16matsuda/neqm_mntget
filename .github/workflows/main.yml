@@ -21,9 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install Japanese
         run: |
-          yum -y update
-          yum install -y ipa-gothic-fonts ipa-mincho-fonts ipa-pgothic-fonts ipa-pmincho-fonts
-
+          sudo apt install fonts-noto
 
       - name: Install dependencies
         run: pip install -r requirements.txt
