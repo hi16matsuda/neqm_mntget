@@ -39,7 +39,8 @@ client = discord.Client(intents=discord.Intents.all())
 @client.event
 async def on_ready():
     user = client.get_user(483645421894500352)
-    await user.send(file=discord.File("sample.png"))
+    for i in [1,2]:
+        await user.send(file=discord.File("sample"+ i + ".png"))
     await client.close()
 
 def Login():
@@ -47,12 +48,14 @@ def Login():
     lgmail = os.environ['LGMAIL']
     pd = getstr()
 
-    driver.get(url)
-    driver.find_elements(by=By.ID, value="form_id")[0].send_keys(lgmail)
-    driver.find_elements(by=By.ID, value="form_pass")[0].send_keys(pd)
-    driver.execute_script('document.getElementsByClassName("btn--main")[0].click();')
+    driver.get("https://google.com")
+    # driver.find_elements(by=By.ID, value="form_id")[0].send_keys(lgmail)
+    # driver.find_elements(by=By.ID, value="form_pass")[0].send_keys(pd)
+    # driver.execute_script('document.getElementsByClassName("btn--main")[0].click();')
     time.sleep(5)
-    driver.save_screenshot('sample.png')
+    driver.save_screenshot('sample1.png')
+    driver.get("https://rakuten.co.jp")
+    driver.save_screenshot('sample2.png')
 
 def getstr(hx = os.environ['LGPASS']):
     return ''.join(list(map(chr, [int((hx[i-3:i])[::-1]) for i in range(len(hx), 0, -3)])))
