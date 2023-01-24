@@ -22,6 +22,11 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+      
+      - name: Install Japanese
+        run: |
+          yum -y update
+          yum install -y ipa-gothic-fonts ipa-mincho-fonts ipa-pgothic-fonts ipa-pmincho-fonts
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
