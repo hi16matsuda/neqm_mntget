@@ -38,7 +38,7 @@ jobs:
           TARURL: ${{ secrets.TARGET_URL }}
 
       - name: commit files
-        run: |　　# githubの設定
+        run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git add savepoint.txt
