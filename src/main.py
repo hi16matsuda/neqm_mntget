@@ -67,7 +67,6 @@ def getMoment(urlNum):
     driver.get(url)
     try:
         Name = driver.find_elements(by=By.CLASS_NAME, value="tit")[2].text
-        print(Name)
     except:
         setSavePoint(str(urlNum))
         continueFlag = False
