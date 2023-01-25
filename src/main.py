@@ -3,6 +3,7 @@ import sys
 import time
 import io
 import discord
+import datetime
 from urllib import request
 from PIL import Image
 from selenium.webdriver.common.keys import Keys
@@ -57,7 +58,7 @@ def getSavePoint():
 
 def setSavePoint(urlNum):
     with open('savepoint.txt', 'w') as f:
-        f.write(urlNum)
+        f.write(urlNum + "\n" + str(datetime.datetime.now()))
 
 def getMoment(urlNum):
     global continueFlag
