@@ -58,7 +58,7 @@ def getSavePoint():
 
 def setSavePoint(urlNum):
     with open('savepoint.txt', 'w') as f:
-        f.write(urlNum + "\n" + str(datetime.datetime.now()))
+        f.write(urlNum + "\n" + str(datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))))
 
 def getMoment(urlNum):
     global continueFlag
