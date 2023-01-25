@@ -35,39 +35,64 @@ wait = WebDriverWait(driver, 1000)
 TOKEN = os.environ['DISTOKEN']
 
 client = discord.Client(intents=discord.Intents.all())
+continueFlag = True
 
 @client.event
 async def on_ready():
     user = client.get_user(483645421894500352)
-    for i in [1,2]:
-        await user.send(file=discord.File("sample"+ str(i) + ".png"))
+    for i in ["result/" + file for file in os.listdir("result")]:  await user.send(file=discord.File(i))
     await client.close()
 
 def Login():
     url = os.environ['LGURL']
     lgmail = os.environ['LGMAIL']
-    pd = getstr()
+    pd = ''.join(list(map(chr, [int((os.environ['LGPASS'][i-3:i])[::-1]) for i in range(len(os.environ['LGPASS']), 0, -3)])))
 
-    driver.get("https://google.com")
-    # driver.find_elements(by=By.ID, value="form_id")[0].send_keys(lgmail)
-    # driver.find_elements(by=By.ID, value="form_pass")[0].send_keys(pd)
-    # driver.execute_script('document.getElementsByClassName("btn--main")[0].click();')
-    time.sleep(5)
-    driver.save_screenshot('sample1.png')
-    driver.get("https://rakuten.co.jp")
-    driver.save_screenshot('sample2.png')
-    print(getSavePoint())
-    with open('savepoint.txt', 'w') as f:
-        f.write(str(3))
-
-def getstr(hx = os.environ['LGPASS']):
-    return ''.join(list(map(chr, [int((hx[i-3:i])[::-1]) for i in range(len(hx), 0, -3)])))
+    driver.get(url)
+    driver.find_elements(by=By.ID, value="form_id")[0].send_keys(lgmail)
+    driver.find_elements(by=By.ID, value="form_pass")[0].send_keys(pd)
+    driver.execute_script('document.getElementsByClassName("btn--main")[0].click();')
 
 def getSavePoint():
     with open('savepoint.txt') as f:
         for line in f:
             return int(line)
 
+def setSavePoint(urlNum):
+    with open('savepoint.txt', 'w') as f:
+        f.write(urlNum)
 
-Login()
-client.run(TOKEN)
+def getMoment(urlNum):
+    global continueFlag
+    url = os.environ['TARURL'] + str(urlNum) + "/"
+    driver.get(url)
+    try:
+        Name = driver.find_elements(by=By.CLASS_NAME, value="tit")[2].text
+        print(Name)
+    except:
+        setSavePoint(str(urlNum))
+        continueFlag = False
+    
+    if continueFlag:
+        try:
+            savepath = Name.replace(' ', '') + '_' + driver.find_elements(by=By.CLASS_NAME, value="date")[0].text.replace('.', '-').replace(' ', '_').replace(':', '')
+            if len(driver.find_elements(by=By.TAG_NAME, value="img")) == 9:
+                Image.open(io.BytesIO(request.urlopen(driver.find_elements(by=By.TAG_NAME, value="img")[2].get_attribute('src')).read())).save('result/' + savepath +'.jpg')
+            else:
+                driver.save_screenshot('result/' + savepath +'.png')
+        except:
+                print("error")
+
+def main():
+    Login()
+    urlNum = getSavePoint()
+
+    while continueFlag:
+        getMoment(urlNum)
+        urlNum += 1
+        time.sleep(10)
+
+    client.run(TOKEN)
+
+if __name__ == '__main__':
+    main()
