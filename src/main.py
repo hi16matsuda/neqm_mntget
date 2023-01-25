@@ -5,7 +5,6 @@ import io
 import discord
 from urllib import request
 from PIL import Image
-from natsort import natsorted
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -46,13 +45,9 @@ async def on_ready():
     await client.close()
 
 def Login():
-    url = os.environ['LGURL']
-    lgmail = os.environ['LGMAIL']
-    pd = ''.join(list(map(chr, [int((os.environ['LGPASS'][i-3:i])[::-1]) for i in range(len(os.environ['LGPASS']), 0, -3)])))
-
-    driver.get(url)
-    driver.find_elements(by=By.ID, value="form_id")[0].send_keys(lgmail)
-    driver.find_elements(by=By.ID, value="form_pass")[0].send_keys(pd)
+    driver.get(os.environ['LGURL'])
+    driver.find_elements(by=By.ID, value="form_id")[0].send_keys(os.environ['LGMAIL'])
+    driver.find_elements(by=By.ID, value="form_pass")[0].send_keys(''.join(list(map(chr, [int((os.environ['LGPASS'][i-3:i])[::-1]) for i in range(len(os.environ['LGPASS']), 0, -3)]))))
     driver.execute_script('document.getElementsByClassName("btn--main")[0].click();')
 
 def getSavePoint():
