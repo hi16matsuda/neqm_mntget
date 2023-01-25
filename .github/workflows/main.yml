@@ -43,6 +43,7 @@ jobs:
 
         env:
           DISTOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISIMO: ${{ secrets.DISID_IMO }}
           LGMAIL: ${{ secrets.LG_MAIL }}
           LGPASS: ${{ secrets.LG_PASS }}
           LGURL: ${{ secrets.LG_URL }}
