@@ -40,7 +40,9 @@ continueFlag = True
 @client.event
 async def on_ready():
     user = client.get_user(483645421894500352)
-    for i in ["result/" + file for file in os.listdir("result")]:  await user.send(file=discord.File(i))
+    for i in ["result/" + file for file in os.listdir("result")]:  
+        if i != "result/.gitignore":
+            await user.send(file=discord.File(i))
     await client.close()
 
 def Login():
