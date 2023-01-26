@@ -43,7 +43,7 @@ async def on_ready():
         user = client.get_user(userId)
         for i in ["result/" + file for file in os.listdir("result")]:  
             if i != "result/.gitignore":
-                await user.send(i[i.rfind('/')+1:-4], file=discord.File(i))
+                await user.send(str(i[i.rfind('/')+1:-4]), file=discord.File(i))
         await client.close()
 
 def Login():
