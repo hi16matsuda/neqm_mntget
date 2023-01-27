@@ -40,7 +40,7 @@ continueFlag = True
 
 @client.event
 async def on_ready():
-    for userId in [os.environ['DISIMO']]: #, os.environ['DISTKT']
+    for userId in [os.environ['DISIMO'], os.environ['DISTKT']]:
         user = client.get_user(int(userId))
         for i in natsorted(["result/" + file for file in os.listdir("result")]):  
             if i != "result/.gitignore":
