@@ -6,6 +6,7 @@ import discord
 import datetime
 from urllib import request
 from PIL import Image
+from natsort import natsorted
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -41,10 +42,11 @@ continueFlag = True
 async def on_ready():
     for userId in [os.environ['DISIMO'], os.environ['DISTKT']]:
         user = client.get_user(int(userId))
-        for i in ["result/" + file for file in os.listdir("result")]:  
+        for i in natsorted(["result/" + file for file in os.listdir("result")]):  
             if i != "result/.gitignore":
                 await user.send(i[i.rfind('/')+1:-4], file=discord.File(i))
-        await client.close()
+    
+    await client.close()
 
 def Login():
     driver.get(os.environ['LGURL'])

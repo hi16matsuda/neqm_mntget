@@ -2,3 +2,4 @@ discord.py
 Pillow
 urllib3
 selenium
+natsort
