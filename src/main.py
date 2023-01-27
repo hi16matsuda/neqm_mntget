@@ -40,7 +40,7 @@ continueFlag = True
 
 @client.event
 async def on_ready():
-    for userId in [os.environ['DISIMO'], os.environ['DISTKT']]:
+    for userId in [os.environ['DISIMO']]: #, os.environ['DISTKT']
         user = client.get_user(int(userId))
         for i in natsorted(["result/" + file for file in os.listdir("result")]):  
             if i != "result/.gitignore":
@@ -63,16 +63,20 @@ def setSavePoint(urlNum):
     with open('savepoint.txt', 'w') as f:
         f.write(urlNum + "\n" + str(datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))))
 
-def getMoment(urlNum):
-    global continueFlag
+def searchMemont(urlNum):
     url = os.environ['TARURL'] + str(urlNum) + "/"
     driver.get(url)
     try:
         Name = driver.find_elements(by=By.CLASS_NAME, value="tit")[2].text
     except:
         setSavePoint(str(urlNum))
-        continueFlag = False
-    
+        return False, " "
+    return True, Name
+
+def getMoment(urlNum):
+    global continueFlag
+    continueFlag, Name = searchMemont(urlNum)
+
     if continueFlag:
         try:
             savepath = Name.replace(' ', '') + '_' + driver.find_elements(by=By.CLASS_NAME, value="date")[0].text.replace('.', '-').replace(' ', '_').replace(':', '')
@@ -82,6 +86,8 @@ def getMoment(urlNum):
                 driver.save_screenshot('result/' + savepath +'.png')
         except:
                 print("error")
+    else :
+        continueFlag, Name = searchMemont(urlNum+1)
 
 def main():
     Login()
