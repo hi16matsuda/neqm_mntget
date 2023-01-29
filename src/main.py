@@ -63,13 +63,14 @@ def setSavePoint(urlNum):
     with open('savepoint.txt', 'w') as f:
         f.write(urlNum + "\n" + str(datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))))
 
-def searchMemont(urlNum):
+def searchMemont(urlNum, nextFlag = False):
     url = os.environ['TARURL'] + str(urlNum) + "/"
     driver.get(url)
     try:
         Name = driver.find_elements(by=By.CLASS_NAME, value="tit")[2].text
     except:
-        setSavePoint(str(urlNum))
+        if not nextFlag:
+            setSavePoint(str(urlNum))
         return False, " "
     return True, Name
 
@@ -87,7 +88,7 @@ def getMoment(urlNum):
         except:
                 print("error")
     else :
-        continueFlag, Name = searchMemont(urlNum+1)
+        continueFlag, Name = searchMemont(urlNum+1, True)
 
 def main():
     Login()
@@ -95,9 +96,8 @@ def main():
 
     while continueFlag:
         getMoment(urlNum)
-        if continueFlag:
-            urlNum += 1
-            time.sleep(10)
+        urlNum += 1
+        time.sleep(10)
 
     client.run(TOKEN)
 
