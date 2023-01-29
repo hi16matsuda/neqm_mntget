@@ -95,8 +95,9 @@ def main():
 
     while continueFlag:
         getMoment(urlNum)
-        urlNum += 1
-        time.sleep(10)
+        if continueFlag:
+            urlNum += 1
+            time.sleep(10)
 
     client.run(TOKEN)
 
